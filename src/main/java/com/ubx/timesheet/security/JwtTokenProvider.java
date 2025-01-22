@@ -44,9 +44,8 @@ public class JwtTokenProvider {
     }
 
     public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parserBuilder()
+        Claims claims = Jwts.parser()
                 .setSigningKey(key)
-                .build()
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -55,7 +54,9 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken);
+            Jwts.parser()
+                .setSigningKey(key)
+                .parseClaimsJws(authToken);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
